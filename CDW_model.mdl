@@ -1,0 +1,793 @@
+{UTF-8}
+Total Emissions due to Recovery Processes=
+	Total emissions from recycling CDW at recycling plant+Total emissions from roadfilling\
+		+"Total emissions from pre-processing"
+	~	kg/Year
+	~		|
+
+Total Carbon Emissions across the Value Chain=
+	Total emissions from incineration+Total emissions from landfilling+Total Emissions due to Recovery Processes\
+		+Total emissions from using primary aggregates
+	~	kg/Year
+	~		|
+
+Upcycling and Reuse Rate=
+	(Recycling for secondary aggregates/CDW Generation per year)*100
+	~	Dmnl
+	~		|
+
+Recycling efficiency=
+	0.7 + IF THEN ELSE(CDW identification and separation at source with sorting obligations\
+		=0,0,0.1) + IF THEN ELSE(Technological advances in recycling=0,0,0.15)
+	~	Dmnl
+	~		|
+
+Sorting efficiency=
+	0.7 + IF THEN ELSE(CDW identification and separation at source with sorting obligations\
+		=0,0,0.25)
+	~	Dmnl
+	~		|
+
+Sorted for reuse=
+	"Pre-processing"- Sorted for recycling + IF THEN ELSE("Pre-demolition audits"=0,0,3000\
+		)
+	~	kilotonnes/Year
+	~	Only 3-4% of the components and materials are reused in the Netherlands in the \
+		construction industry.
+		0.03*"Total CDW Pre-Processed"
+	|
+
+New concrete=
+	Primary aggregates requirement+Recycled aggregates supply
+	~	kilotonnes/Year
+	~		|
+
+Collection=
+	Collection efficiency*(CDW Generation per year-CDW Exported+CDW Waste Imported)
+	~	kilotonnes/Year [0,?]
+	~		|
+
+Recycling for secondary aggregates=
+	Recycled aggregates requirement*Recycling efficiency
+	~	kilotonnes/Year [0,?]
+	~	Efficiency of recycling technology employed*Recyclable CDW*Percentage \
+		upcycled
+	|
+
+Source Reduction Measures=
+	IF THEN ELSE("Pre-demolition audits"=0,0,3000)
+	~	kilotonnes/Year
+	~	reuse - 380 +
+	|
+
+Losses during collection=
+	(CDW Generation per year-CDW Exported+CDW Waste Imported)-Collection
+	~	kilotonnes/Year [0,?]
+	~		|
+
+Technological advances in recycling=
+	IF THEN ELSE(Time>2022, 0, 0)
+	~	Dmnl
+	~	Accepts 0 or 1. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 1, 0 )
+	|
+
+Unit emissions from using primary aggregates=
+	(11-Circular and sustainable material procurement)*1000
+	~	kg/kilotonnes
+	~		|
+
+Circular and sustainable material procurement=
+	IF THEN ELSE(Time>2022, 0, 0)
+	~	kg/kilotonnes
+	~	Accepts 0 or 3. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 3, 0 )
+	|
+
+Collection efficiency=
+	0.8 + IF THEN ELSE(CDW identification and separation at source with sorting obligations\
+		=0,0,0.15)
+	~	Dmnl
+	~	0.8
+		Based on the figure that 99% of all CDW is recycled in the NL. Assumption that it \
+		goes through the routes of proper collection!
+		0.99
+	|
+
+Energy Recovery=
+	Proportion of CDW going for energy recovery*Dispose
+	~	kilotonnes/Year [0,?]
+	~		|
+
+CDW Generation per year=
+	((Construction and Demolition Waste Input/Unit Time) - Source Reduction Measures)
+	~	kilotonnes/Year
+	~	((Construction and Demolition Waste Input/Unit Time) - Source Reduction \
+		Measures)
+	|
+
+Sorted for recycling=
+	Proportion of CDW going for recycling*"Pre-processing"
+	~	kilotonnes/Year [0,?]
+	~		|
+
+Dispose=
+	Collection - "Pre-processing"
+	~	kilotonnes/Year [0,?]
+	~	Assuming in this 10% comes the hazadous waste + other waste which cannot \
+		be reused
+	|
+
+Recycled aggregates supply=
+	Recycling for secondary aggregates
+	~	kilotonnes/Year
+	~		|
+
+"Change in C&D waste input"=
+	(Percentage change in CDW per year*Construction and Demolition Waste Input/Unit Time\
+		)
+	~	kilotonnes/Year
+	~	0.04*Demolition Waste Input
+	|
+
+Collected waste to landfill=
+	Dispose-Energy Recovery
+	~	kilotonnes/Year [0,?]
+	~		|
+
+Proportion of CDW going for energy recovery=
+	0.67
+	~	Dmnl
+	~	0.67
+	|
+
+Proportion of CDW going for recycling=
+	0.97
+	~	Dmnl
+	~	0.97
+	|
+
+Roadfilling=
+	Sorted for recycling-Recycling for secondary aggregates
+	~	kilotonnes/Year
+	~	Assuming 52% of "Total Recycled Waste" is actually backfilled, since we \
+		know the figure for recycled materials in new construction is 38%
+	|
+
+Unit Time=
+	1
+	~	Year
+	~		|
+
+Recycled aggregates requirement=
+	(Strength of demand for recycled aggregates*Total concrete requirement)
+	~	kilotonnes/Year
+	~		|
+
+Uncollected waste in landfill=
+	Losses during collection
+	~	kilotonnes/Year [0,?]
+	~		|
+
+"Pre-processing"=
+	"Proportion of CDW pre-processed for further recovery"*Sorting efficiency*Collection
+	~	kilotonnes/Year [0,?]
+	~	"And the pre sorting by crane and we have a couple of locations on a few \
+		where we have large sorting lines, automated sorting lines where we can \
+		take the mixed construction and demolition waste apart. So you have these \
+		containers that can contain wood, metals, plastics all put together and \
+		these sorting lines are able to take those apart into various streams."
+	|
+
+"Proportion of CDW pre-processed for further recovery"=
+	0.9
+	~	Dmnl
+	~	0.9
+	|
+
+Total concrete requirement=
+	17000
+	~	kilotonnes/Year
+	~	From Input-Output Table - 315789/1000
+		Our study shows that construction and renovation of buildings in the \
+		Netherlands results in a yearly demand for 17 million tonnes of materials, \
+		most of which is concrete.
+	|
+
+Unit emissions from incineration=
+	17.9*1000
+	~	kg/kilotonnes
+	~		|
+
+Unit emissions from landfilling=
+	17.9*1000
+	~	kg/kilotonnes
+	~		|
+
+Total Amount of CDW Recovered=
+	Waste Recovered per year from Upcycling and Reuse+Roadfilling
+	~	kilotonnes/Year
+	~		|
+
+Primary aggregates requirement=
+	Total concrete requirement-Recycled aggregates supply
+	~	kilotonnes/Year
+	~		|
+
+Total emissions from incineration=
+	Unit emissions from incineration*Energy Recovery
+	~	kg/Year
+	~		|
+
+Total emissions from roadfilling=
+	Roadfilling*Unit emissions from roadfilling
+	~	kg/Year
+	~	8.73
+		Source: https://www.sciencedirect.com/science/article/pii/S0956053X15300283
+	|
+
+Strength of demand for recycled aggregates=
+	0.13 + IF THEN ELSE(Certifications and standards=0,0,0.16) + IF THEN ELSE(Regulate price of recycled aggregates\
+		=0,0,0.12) + IF THEN ELSE(Financial instruments investments tax incentives and subsidies\
+		=0,0,0.24)
+	~	Dmnl
+	~	IF THEN ELSE((Certifications and standards+Tax incentives and subsidies+Regulate \
+		price of recycled aggregates)=0,0.13, IF THEN ELSE((Certifications and \
+		standards+Tax incentives and subsidies+Regulate price of recycled \
+		aggregates)=1,0.25,IF THEN ELSE((Certifications and standards+Tax \
+		incentives and subsidies+Regulate price of recycled aggregates)=2,0.4,IF \
+		THEN ELSE((Certifications and standards+Tax incentives and \
+		subsidies+Regulate price of recycled aggregates)=3,0.6,0)
+		)))
+	|
+
+CDW identification and separation at source with sorting obligations=
+	IF THEN ELSE(Time>2022, 0, 0)
+	~	Dmnl
+	~	Accepts 0 or 1. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 1, 0 )
+	|
+
+"CDW reused in closed-loop per year"=
+	Sorted for reuse
+	~	kilotonnes/Year [0,?]
+	~		|
+
+Percentage that is upcycled for aggregates=
+	(Recycling for secondary aggregates/Sorted for recycling)*100
+	~	Dmnl
+	~		|
+
+Total emissions from recycling CDW at recycling plant=
+	Unit emissions from upcycling CDW*Recycled aggregates supply
+	~	kg/Year
+	~		|
+
+Total CDW Collected= INTEG (
+	Collection-Dispose-"Pre-processing",
+		20004)
+	~	kilotonnes
+	~		|
+
+Total emissions from using primary aggregates=
+	Primary aggregates requirement*Unit emissions from using primary aggregates
+	~	kg/Year
+	~		|
+
+Unit emissions from roadfilling=
+	8.73*1000
+	~	kg/kilotonnes
+	~		|
+
+New concrete produced= INTEG (
+	Primary aggregates requirement-New concrete,
+		17000)
+	~	kilotonnes
+	~		|
+
+Reusable CDW= INTEG (
+	Sorted for reuse-"CDW reused in closed-loop per year",
+		379)
+	~	kilotonnes
+	~		|
+
+Downcycling Rate=
+	(Roadfilling/CDW Generation per year)*100
+	~	Dmnl [0,100]
+	~		|
+
+"Pre-demolition audits"=
+	IF THEN ELSE(Time>2022, 0, 0 )
+	~	Dmnl
+	~	Accepts 0 or 1. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 1, 0 )
+	|
+
+Total emissions from landfilling=
+	(Uncollected waste in landfill+Collected waste to landfill)*Unit emissions from landfilling
+	~	kg/Year
+	~	source: https://www.sciencedirect.com/science/article/pii/S0956053X15300283
+	|
+
+Regulate price of recycled aggregates=
+	IF THEN ELSE(Time>2022, 0, 0 )
+	~	Dmnl
+	~	Accepts 0 or 1. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 1, 0 )
+	|
+
+Total CDW Disposed=
+	Dispose+Losses during collection
+	~	kilotonnes/Year
+	~		|
+
+Total Recovery Rate=
+	((Roadfilling+Waste Recovered per year from Upcycling and Reuse)/CDW Generation per year\
+		)*100
+	~	Dmnl [0,100]
+	~		|
+
+Financial instruments investments tax incentives and subsidies=
+	IF THEN ELSE(Time>2022, 0, 0)
+	~	Dmnl
+	~	Accepts 0 or 1. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 1, 0 )
+	|
+
+Certifications and standards=
+	IF THEN ELSE(Time>2022, 0, 0 )
+	~	Dmnl
+	~	Accepts 0 or 1. To switch on policy, use the following equation: IF THEN \
+		ELSE(Time>2022, 1, 0 )
+	|
+
+Unit emissions from upcycling CDW=
+	4*1000
+	~	kg/kilotonnes
+	~	https://www.sciencedirect.com/science/article/pii/S0956053X1300055X
+	|
+
+Reuse Rate=
+	("CDW reused in closed-loop per year"/CDW Generation per year)*100
+	~	Dmnl [0,100]
+	~		|
+
+Waste Incinerated= INTEG (
+	Energy Recovery,
+		4959)
+	~	kilotonnes
+	~		|
+
+Waste Recovered per year from Upcycling and Reuse=
+	"CDW reused in closed-loop per year"+Recycling for secondary aggregates
+	~	kilotonnes/Year
+	~		|
+
+"Total emissions from pre-processing"=
+	"Pre-processing"*"Unit emissions from pre-processing"
+	~	kg/Year
+	~		|
+
+Total CDW Upcycled for Aggregates= INTEG (
+	Recycling for secondary aggregates,
+		2200)
+	~	kilotonnes
+	~	Assuming 38% - which is the known figure for materials recycled in new \
+		construction
+	|
+
+"Unit emissions from pre-processing"=
+	10.74*1000
+	~	kg/kilotonnes
+	~	Considering an average capacity of 18 m3 / h for the treatment of waste by \
+		the equipment and machinery, 9.49 kgCO2 is generated. Conversion of 1m3 \
+		comes to 0.41.
+	|
+
+CDW Exported=
+	232
+	~	kilotonnes/Year
+	~	In 2012, 232,113 tonnes of CDW were exported out of The Netherlands.
+	|
+
+Total CDW in Netherlands= INTEG (
+	CDW Generation per year+CDW Waste Imported-CDW Exported-Collection-Losses during collection\
+		,
+		25006)
+	~	kilotonnes
+	~		|
+
+Accumulated CDW in landfills= INTEG (
+	Collected waste to landfill+Uncollected waste in landfill,
+		7443)
+	~	kilotonnes
+	~		|
+
+"Total CDW Pre-Processed"= INTEG (
+	"Pre-processing"-Sorted for recycling-Sorted for reuse,
+		12602)
+	~	kilotonnes
+	~		|
+
+CDW Waste Imported=
+	710
+	~	kilotonnes/Year
+	~	In 2012, 710,405 tonnes of CDW were imported into The Netherlands
+		 Since 2006, the import of CDW has drastically risen by more than 300%, in 2006 \
+		the CDW import
+		was 215,812 tonne.
+	|
+
+Total CDW Roadfilled= INTEG (
+	Roadfilling,
+		10200)
+	~	kilotonnes
+	~	Assuming 52% of "Total Recycled Waste" is actually backfilled, since we \
+		know the figure for recycled materials in new construction is 38%
+	|
+
+"Waste for Disposal/Incineration"= INTEG (
+	Dispose-Collected waste to landfill-Energy Recovery,
+		7402)
+	~	kilotonnes
+	~	Sum of Incineration + Landfill + Other Disposal in 2010 => 1476
+		
+		Alternatively, 10% of total collected = 1960
+	|
+
+Total uncollected CDW= INTEG (
+	Losses during collection-Uncollected waste in landfill,
+		237)
+	~	kilotonnes
+	~	Assuming 528kt was not collected. Also includes asbestos waste. 
+		 The annual asbestos waste was 237 kt in 2012.
+	|
+
+Construction and Demolition Waste Input= INTEG (
+	"Change in C&D waste input",
+		24528)
+	~	kilotonnes
+	~	Source: Deloitte -> Summary - CDW generation and recovery official \
+		statistics. Figure from 2010.
+	|
+
+Recyclable CDW= INTEG (
+	Sorted for recycling-Roadfilling-Recycling for secondary aggregates,
+		12223)
+	~	kilotonnes
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+Percentage change in CDW per year=
+	0
+	~	Dmnl
+	~	Can accept positive or negative values
+	|
+
+FINAL TIME  = 2030
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 2010
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 0.015625
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.0625
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,80,0
+10,1,Total CDW in Netherlands,390,856,41,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,2,48,203,855,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(315,852)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(241,852)|
+11,5,0,275,852,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,CDW Generation per year,275,879,57,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Total CDW Collected,621,856,40,22,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,8,10,7,4,0,0,22,0,0,0,-1--1--1,,1|(539,855)|
+1,9,10,1,100,0,0,22,0,0,0,-1--1--1,,1|(458,855)|
+11,10,0,491,855,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,11,Collection,491,874,33,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,12,Collection efficiency,491,716,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,13,"Total CDW Pre-Processed",794,772,41,26,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,14,Recyclable CDW,1002,767,51,31,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,15,17,13,4,0,0,22,0,0,0,-1--1--1,,1|(695,769)|
+1,16,17,7,100,0,0,22,0,0,0,-1--1--1,,1|(631,805)|
+11,17,0,631,769,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,18,"Pre-processing",631,788,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,19,Sorting efficiency,495,613,54,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,20,22,14,4,0,0,22,0,0,0,-1--1--1,,1|(926,769)|
+1,21,22,13,100,0,0,22,0,0,0,-1--1--1,,1|(862,769)|
+11,22,0,896,769,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,23,Sorted for recycling,896,788,33,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,24,Total uncollected CDW,538,1228,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,25,27,24,4,0,0,22,0,0,0,-1--1--1,,1|(525,1144)|
+1,26,27,1,100,0,0,22,0,0,0,-1--1--1,,1|(525,856)|
+11,27,0,525,1076,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,28,Losses during collection,525,1103,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,29,Total CDW Upcycled for Aggregates,1294,768,49,28,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,30,Total CDW Roadfilled,1041,931,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,31,33,29,4,0,0,22,0,0,0,-1--1--1,,1|(1197,767)|
+1,32,33,14,100,0,0,22,0,0,0,-1--1--1,,1|(1095,767)|
+11,33,0,1143,767,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,34,Recycling for secondary aggregates,1143,794,69,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,35,37,30,4,0,0,22,0,0,0,-1--1--1,,1|(1035,876)|
+1,36,37,14,100,0,0,22,0,0,0,-1--1--1,,1|(1035,812)|
+11,37,0,1035,834,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,38,Roadfilling,1035,853,34,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,39,Construction and Demolition Waste Input,156,754,46,31,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,40,48,-10,726,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,41,43,39,4,0,0,22,0,0,0,-1--1--1,,1|(71,726)|
+1,42,43,40,100,0,0,22,0,0,0,-1--1--1,,1|(10,726)|
+11,43,0,26,726,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,44,"Change in C&D waste input",26,753,52,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,45,39,43,1,0,0,0,0,128,0,-1--1--1,,1|(34,687)|
+10,46,"Waste for Disposal/Incineration",799,1070,43,23,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,47,49,46,4,0,0,22,0,0,0,-1--1--1,,1|(799,957)|
+1,48,49,7,100,0,0,22,0,0,0,-1--1--1,,1|(631,913)|
+11,49,0,631,957,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,50,Dispose,631,976,27,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,51,Reusable CDW,1007,622,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,52,54,51,4,0,0,22,0,0,0,-1--1--1,,1|(881,614)|
+1,53,54,13,100,0,0,22,0,0,0,-1--1--1,,1|(790,684)|
+11,54,0,790,614,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,55,Sorted for reuse,790,633,51,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,56,Accumulated CDW in landfills,794,1231,45,27,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,57,59,56,4,0,0,22,0,0,0,-1--1--1,,1|(714,1239)|
+1,58,59,24,100,0,0,22,0,0,0,-1--1--1,,1|(622,1239)|
+11,59,0,673,1239,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,60,Uncollected waste in landfill,673,1266,59,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,61,63,56,4,0,0,22,0,0,0,-1--1--1,,1|(794,1176)|
+1,62,63,46,100,0,0,22,0,0,0,-1--1--1,,1|(794,1114)|
+11,63,0,794,1142,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,64,Collected waste to landfill,862,1142,60,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,65,Waste Incinerated,1011,1068,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,66,68,65,4,0,0,22,0,0,0,-1--1--1,,1|(941,1068)|
+1,67,68,46,100,0,0,22,0,0,0,-1--1--1,,1|(871,1068)|
+11,68,0,906,1068,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,69,Energy Recovery,906,1087,54,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,70,Source Reduction Measures,173,978,57,19,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,71,Waste Recovered per year from Upcycling and Reuse,1213,524,86,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,72,48,1180,622,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,73,75,72,4,0,0,22,0,0,0,-1--1--1,,1|(1140,618)|
+1,74,75,51,100,0,0,22,0,0,0,-1--1--1,,1|(1073,618)|
+11,75,0,1105,618,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,76,"CDW reused in closed-loop per year",1105,654,58,28,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,77,55,75,1,0,0,0,0,128,0,-1--1--1,,1|(889,580)|
+1,78,75,71,1,0,0,0,0,128,0,-1--1--1,,1|(1159,586)|
+12,79,48,382,714,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,80,82,1,4,0,0,22,0,0,0,-1--1--1,,1|(389,807)|
+1,81,82,79,100,0,0,22,0,0,0,-1--1--1,,1|(389,746)|
+11,82,0,389,776,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,83,CDW Waste Imported,440,776,43,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,84,New concrete produced,1864,418,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,85,48,1675,416,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,86,88,84,4,0,0,22,0,0,0,-1--1--1,,1|(1791,415)|
+1,87,88,85,100,0,0,22,0,0,0,-1--1--1,,1|(1715,415)|
+11,88,0,1752,415,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,89,Primary aggregates requirement,1752,442,61,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,90,19,18,1,0,0,0,0,128,0,-1--1--1,,1|(568,725)|
+10,91,Total Recovery Rate,1177,367,49,19,8,3,0,4,0,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,92,CDW Generation per year,1092,276,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,93,92,91,1,0,0,0,0,128,0,-1--1--1,,1|(1137,302)|
+1,94,71,91,1,0,0,0,0,128,0,-1--1--1,,1|(1176,443)|
+12,95,48,389,1019,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,96,98,95,4,0,0,22,0,0,0,-1--1--1,,1|(389,981)|
+1,97,98,1,100,0,0,22,0,0,0,-1--1--1,,1|(389,909)|
+11,98,0,389,945,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,99,CDW Exported,448,945,51,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,100,Total emissions from roadfilling,1159,980,66,19,8,3,0,2,0,0,0,0,-1--1--1,128-192-0,|||128-192-0,0,0,0,0,0,0
+1,101,37,100,1,0,0,0,0,128,0,-1--1--1,,1|(1108,876)|
+10,102,Total emissions from landfilling,733,1362,66,19,8,3,0,2,0,0,0,0,-1--1--1,128-192-0,|||128-192-0,0,0,0,0,0,0
+1,103,59,102,1,0,0,0,0,128,0,-1--1--1,,1|(760,1268)|
+10,104,"Total emissions from pre-processing",640,490,66,19,8,3,0,2,0,0,0,0,-1--1--1,0-0-0,|||128-192-0,0,0,0,0,0,0
+1,105,18,104,1,0,0,0,0,128,0,-1--1--1,,1|(568,652)|
+10,106,"Unit emissions from pre-processing",645,389,85,19,8,3,0,2,0,0,0,0,-1--1--1,0-0-0,|||128-192-0,0,0,0,0,0,0
+1,107,106,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,108,33,71,1,0,0,0,0,128,0,-1--1--1,,1|(1199,663)|
+10,109,Total emissions from incineration,1046,1182,66,19,8,3,0,2,0,0,0,0,-1--1--1,128-192-0,|||128-192-0,0,0,0,0,0,0
+1,110,68,109,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,111,Reuse Rate,1076,441,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,112,76,111,1,0,0,0,0,128,0,-1--1--1,,1|(1097,519)|
+1,113,92,111,1,0,0,0,0,128,0,-1--1--1,,1|(1069,349)|
+10,114,Unit emissions from upcycling CDW,1462,754,62,19,8,3,0,2,0,0,0,0,-1--1--1,192-192-192,|||128-192-0,0,0,0,0,0,0
+10,115,Total emissions from recycling CDW at recycling plant,1519,669,66,28,8,3,0,2,0,0,0,0,-1--1--1,128-192-0,|||128-192-0,0,0,0,0,0,0
+1,116,114,115,1,0,0,0,0,128,0,-1--1--1,,1|(1496,716)|
+1,117,64,102,1,0,0,0,0,128,0,-1--1--1,,1|(867,1291)|
+10,118,Total concrete requirement,1711,277,46,19,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,119,Strength of demand for recycled aggregates,1452,292,73,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,120,Certifications and standards,1616,79,56,19,8,3,0,4,0,0,0,0,-1--1--1,128-192-255,|||0-0-0,0,0,0,0,0,0
+1,121,120,119,1,0,0,0,0,128,0,-1--1--1,,1|(1635,158)|
+10,122,Financial instruments investments tax incentives and subsidies,1460,112,81,28,8,3,0,4,0,0,0,0,-1--1--1,128-192-255,|||0-0-0,0,0,0,0,0,0
+1,123,122,119,1,0,0,0,0,128,0,-1--1--1,,1|(1509,163)|
+10,124,Regulate price of recycled aggregates,1379,188,63,19,8,3,0,4,0,0,0,0,-1--1--1,128-192-255,|||0-0-0,0,0,0,0,0,0
+10,125,"Pre-demolition audits",155,1071,47,19,8,3,0,4,0,0,0,0,-1--1--1,128-128-192,|||0-0-0,0,0,0,0,0,0
+10,126,CDW identification and separation at source with sorting obligations,288,609,79,28,8,3,0,4,0,0,0,0,-1--1--1,128-128-192,|||0-0-0,0,0,0,0,0,0
+10,127,Unit emissions from landfilling,919,1363,62,19,8,3,0,2,0,0,0,0,-1--1--1,0-0-0,|||128-192-0,0,0,0,0,0,0
+1,128,127,102,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,129,125,70,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,130,Total CDW Disposed,673,1139,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,131,28,130,1,0,0,0,0,128,0,-1--1--1,,1|(596,1096)|
+1,132,49,130,1,0,0,0,0,128,0,-1--1--1,,1|(611,1042)|
+10,133,Downcycling Rate,999,189,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,136,124,119,1,0,0,0,0,128,0,-1--1--1,,1|(1449,262)|
+10,137,Unit emissions from roadfilling,1157,1068,62,19,8,3,0,2,0,0,0,0,-1--1--1,0-0-0,|||128-192-0,0,0,0,0,0,0
+1,138,137,100,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,139,Recycled aggregates requirement,1467,430,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,140,139,34,1,0,0,0,0,128,0,-1--1--1,,1|(1364,611)|
+10,141,Recycling for secondary aggregates,674,220,73,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||255-255-255,0,0,0,0,0,0
+10,142,Roadfilling,1178,213,43,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,143,142,91,1,0,0,0,0,128,0,-1--1--1,,1|(1199,284)|
+10,144,Percentage that is upcycled for aggregates,988,690,75,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,145,34,144,1,0,0,0,0,128,0,-1--1--1,,1|(1080,737)|
+1,146,23,144,1,0,0,0,0,128,0,-1--1--1,,1|(915,734)|
+1,147,34,38,1,0,0,0,0,128,0,-1--1--1,,1|(1102,840)|
+1,148,118,89,1,0,0,0,0,128,0,-1--1--1,,1|(1766,357)|
+10,149,Unit emissions from using primary aggregates,2027,536,78,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,150,Total emissions from using primary aggregates,1844,537,78,19,8,3,0,2,0,0,0,0,-1--1--1,128-192-0,|||128-192-0,0,0,0,0,0,0
+1,151,89,150,1,0,0,0,0,128,0,-1--1--1,,1|(1773,501)|
+1,152,149,150,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,153,118,139,1,0,0,0,0,128,0,-1--1--1,,1|(1577,334)|
+1,154,119,139,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,155,Recycled aggregates supply,1525,534,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,156,34,155,1,0,0,0,0,128,0,-1--1--1,,1|(1333,680)|
+1,157,155,89,1,0,0,0,0,128,0,-1--1--1,,1|(1641,509)|
+1,158,142,133,1,0,0,0,0,128,0,-1--1--1,,1|(1103,179)|
+1,159,92,133,1,0,0,0,0,128,0,-1--1--1,,1|(1009,234)|
+10,161,Total Emissions due to Recovery Processes,1675,762,72,19,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,162,155,115,1,0,0,0,0,128,0,-1--1--1,,1|(1544,588)|
+1,163,115,161,1,0,0,0,0,128,0,-1--1--1,,1|(1599,734)|
+1,164,126,19,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,165,23,55,1,0,0,0,0,128,0,-1--1--1,,1|(852,674)|
+12,166,48,2025,274,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,167,169,166,4,0,0,22,0,0,0,-1--1--1,,1|(2025,346)|
+1,168,169,84,100,0,0,22,0,0,0,-1--1--1,,1|(1961,418)|
+11,169,0,2025,418,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,170,New concrete,2025,437,45,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,171,89,170,1,0,0,0,0,128,0,-1--1--1,,1|(1893,466)|
+10,172,Total Carbon Emissions across the Value Chain,1674,868,76,19,8,3,0,4,0,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+1,173,161,172,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,174,TIME STEP,490,219,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||255-255-255,0,0,0,0,0,0
+10,175,Time,644,211,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||255-255-255,0,0,0,0,0,0
+10,176,Time,1614,19,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,177,176,120,1,0,0,0,0,64,0,-1--1--1,,1|(1599,48)|
+10,178,Time,1483,46,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,179,178,122,1,0,0,0,0,64,0,-1--1--1,,1|(1457,63)|
+10,180,Time,1345,63,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,181,180,124,1,0,0,0,0,64,0,-1--1--1,,1|(1329,111)|
+10,182,Time,289,522,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,183,182,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,184,Time,155,1155,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,185,184,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,186,18,50,1,0,0,0,0,128,0,-1--1--1,,1|(693,865)|
+1,187,68,64,1,0,0,0,0,128,0,-1--1--1,,1|(849,1089)|
+10,188,Unit emissions from incineration,1044,1276,62,19,8,3,0,2,0,0,0,0,-1--1--1,192-192-192,|||128-192-0,0,0,0,0,0,0
+1,189,188,109,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,190,Percentage change in CDW per year,-75,822,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,191,190,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,192,Total Amount of CDW Recovered,1278,426,57,19,8,3,0,4,0,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+1,193,71,192,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,194,142,192,1,0,0,0,0,128,0,-1--1--1,,1|(1240,317)|
+10,195,Total emissions from incineration,1807,935,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,197,195,172,1,0,0,0,0,128,0,-1--1--1,,1|(1720,905)|
+10,198,Total emissions from landfilling,1749,996,54,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,199,198,172,1,0,0,0,0,128,0,-1--1--1,,1|(1696,940)|
+1,200,70,6,1,0,0,0,0,128,0,-1--1--1,,1|(209,927)|
+1,201,39,6,1,0,0,0,0,128,0,-1--1--1,,1|(258,782)|
+10,202,"Proportion of CDW pre-processed for further recovery",684,582,80,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,203,202,18,1,0,0,0,0,128,0,-1--1--1,,1|(622,681)|
+1,204,6,11,1,0,0,0,0,128,0,-1--1--1,,1|(370,810)|
+1,205,83,11,1,0,0,0,0,128,0,-1--1--1,,1|(467,820)|
+1,206,99,11,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,207,28,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,208,11,18,1,0,0,0,0,64,0,-1--1--1,,1|(560,829)|
+1,209,11,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,210,Proportion of CDW going for energy recovery,988,993,81,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,211,210,69,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,212,50,69,1,0,0,0,0,64,0,-1--1--1,,1|(806,940)|
+1,213,50,63,1,0,0,0,0,128,0,-1--1--1,,1|(686,1075)|
+1,214,18,23,1,0,0,0,0,128,0,-1--1--1,,1|(761,834)|
+1,215,18,55,1,0,0,0,0,128,0,-1--1--1,,1|(688,689)|
+10,216,Proportion of CDW going for recycling,829,866,65,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,217,216,23,1,0,0,0,0,128,0,-1--1--1,,1|(880,833)|
+10,218,Unit Time,85,900,32,11,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,219,218,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,220,218,44,1,0,0,0,0,128,0,-1--1--1,,1|(40,824)|
+1,221,23,38,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,222,126,12,1,0,0,0,0,128,0,-1--1--1,,1|(433,667)|
+10,223,Time,483,425,26,11,8,2,0,2,-1,0,0,0,-1--1--1,0-0-0,|||255-255-255,0,0,0,0,0,0
+10,224,Time,4,1182,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||255-255-255,0,0,0,0,0,0
+10,225,Circular and sustainable material procurement,2212,532,75,19,8,3,0,4,0,0,0,0,-1--1--1,255-192-0,|||0-0-0,0,0,0,0,0,0
+1,226,225,149,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,227,Time,2206,439,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,228,227,225,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,229,Recycling efficiency,1259,865,31,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,230,Technological advances in recycling,1423,857,67,19,8,3,0,4,0,0,0,0,-1--1--1,255-255-128,|||0-0-0,0,0,0,0,0,0
+10,231,Time,1498,925,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,232,231,230,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,233,230,229,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,234,11,28,1,0,0,0,0,64,0,-1--1--1,,1|(514,988)|
+1,235,12,10,1,0,0,0,0,128,0,-1--1--1,,1|(525,778)|
+1,236,6,28,1,0,0,0,0,128,0,-1--1--1,,1|(338,1080)|
+1,237,99,28,1,0,0,0,0,128,0,-1--1--1,,1|(457,1022)|
+1,238,83,28,1,0,0,0,0,128,0,-1--1--1,,1|(578,988)|
+1,239,155,170,1,0,0,0,0,128,0,-1--1--1,,1|(1712,364)|
+1,240,229,34,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,241,"Pre-demolition audits",939,520,52,19,8,2,0,6,-1,0,0,0,-1--1--1,128-128-192,|||64-64-64,0,0,0,0,0,0
+1,242,241,55,1,0,0,0,0,128,0,-1--1--1,,1|(846,561)|
+10,244,CDW identification and separation at source with sorting obligations,1352,948,80,28,8,2,0,6,-1,0,0,0,-1--1--1,128-128-192,|||92-92-92,0,0,0,0,0,0
+1,245,244,229,1,0,0,0,0,128,0,-1--1--1,,1|(1324,884)|
+10,246,Upcycling and Reuse Rate,971,377,46,19,8,3,0,4,0,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+1,247,92,246,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,248,34,246,1,0,0,0,0,128,0,-1--1--1,,1|(1057,555)|
+10,249,"Total emissions from pre-processing",1742,685,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,250,249,161,1,0,0,0,0,128,0,-1--1--1,,1|(1694,711)|
+10,251,Total emissions from roadfilling,1859,782,54,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,252,251,161,1,0,0,0,0,128,0,-1--1--1,,1|(1776,786)|
+10,256,Total emissions from using primary aggregates,1887,868,83,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,257,256,172,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+///---\\\
+:L<%^E!@
+1:Certifications_and_standards.vdfx
+1:Financial_instruments.vdfx
+1:Price_regulation_aggregates.vdfx
+1:Circular_Procurement.vdfx
+1:Technological_advances_recycling.vdfx
+1:CDW_source_identification.vdfx
+1:Predemolition_audits.vdfx
+1:Base.vdfx
+4:Time
+5:Strength of demand for recycled aggregates
+9:Certifications_and_standards
+19:80,0
+24:2010
+25:2030
+26:2030
+18:postbreakdown_model.vsc
+20:postbreakdown_model.lst
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2010
+38:1
+39:1
+40:0
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:0
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Times New Roman|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
